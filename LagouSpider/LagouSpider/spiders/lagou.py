@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 import os
+import sys
 import pickle
-
+base_path = os.getcwd()  # 获取当前路径
+sys.path.append(base_path)  # 加入到当前路径中 
 import scrapy
 from datetime import datetime
 from scrapy.linkextractors import LinkExtractor

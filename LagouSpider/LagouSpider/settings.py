@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
-
+import os
+import sys
+base_path = os.getcwd()  # 获取当前路径
+sys.path.append(base_path)  # 加入到当前路径中 
 # Scrapy settings for LagouSpider project
 #
 # For simplicity, this file contains only settings considered important or
@@ -27,7 +30,7 @@ ROBOTSTXT_OBEY = False
 # Configure a delay for requests for the same website (default: 0)
 # See https://docs.scrapy.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
-DOWNLOAD_DELAY = 10
+DOWNLOAD_DELAY = 5
 RANDOMIZE_DOWNLOAD_DELAY = True
 # The download delay setting will honor only one of:
 #CONCURRENT_REQUESTS_PER_DOMAIN = 16
@@ -69,7 +72,10 @@ DOWNLOADER_MIDDLEWARES = {
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    'LagouSpider.pipelines.MysqlTwistedPipline': 1,  # 下载图片文件
+    'LagouSpider.pipelines.MajiaImagePipeline': 10, # 下载图片文件
+    'LagouSpider.pipelines.MysqlTwistedPipline': 20,  # 数据库
+    'LagouSpider.pipelines.LagouspiderPipeline':1,
+
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
@@ -98,11 +104,15 @@ import os
 BASE_DIR =os.path.dirname(os.path.abspath(os.path.dirname('__file__')))
 sys.path.insert(0,os.path.join(BASE_DIR,'LagouSpider'))
 
+
 MYSQL_HOST = '127.0.0.1'
 MYSQL_DBNAME = 'cnblogs_spider'
 MYSQL_USER = 'root'
 MYSQL_PASSWORD = 'admin123'
 
-
 SQL_DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
 SQL_DATE_FORMAT = "%Y-%m-%d"
+
+IMAGES_URLS_FIELD = 'img_url'
+project_path = os.path.dirname(os.path.abspath(__file__))
+IMAGES_STORE = os.path.join(project_path,"Images")
